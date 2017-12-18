@@ -1,4 +1,10 @@
-# Check:
+'''
+This is an example of the instantiation of a Pipeline with any standardized regressor with a test size of 20%.
+
+Inspired from the "Supervised Learning with scikit-learn" course on Datacamp.com
+Author: Alex Nakagawa
+'''
+
 
 # Setup the pipeline
 steps = [('scaler', StandardScaler()),
@@ -7,8 +13,8 @@ steps = [('scaler', StandardScaler()),
 pipeline = Pipeline(steps)
 
 # Specify the hyperparameter space
-parameters = {'REGRESSOR__C':[1, 10, 100],
-              'REGRESSOR__gamma':[0.1, 0.01]}
+parameters = {'*REGRESSOR*__C':[1, 10, 100],
+              '*REGRESSOR*__gamma':[0.1, 0.01]}
 
 # Create train and test sets
 X_train, X_test, y_train, y_test = train_test_split(X,y,test_size=0.2,random_state=21)
