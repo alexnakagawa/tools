@@ -1,3 +1,10 @@
+'''
+This is an example of cross tabulation tables created from clustering.
+
+Inspired from the "Unsupervised Learning" course on Datacamp.com
+Author: Alex Nakagawa
+'''
+
 # Import pandas
 import pandas as pd
 
