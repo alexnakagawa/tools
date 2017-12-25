@@ -1,5 +1,6 @@
 '''
-This is an example of a dendrogram plot showing the hierarchical structure of clustering.
+This is a function developed by DrivenData.com splitting a dataset that has multiple
+labels to split them by at least min_count.
 
 Inspired from the "Unsupervised Learning" course on Datacamp.com
 Author: Alex Nakagawa
