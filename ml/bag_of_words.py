@@ -1,3 +1,10 @@
+'''
+This is an example of a bag of words model using a CountVectorizer from the scikit-learn library.
+
+Inspired from the "Supervised Learning" course on Datacamp.com
+Author: Alex Nakagawa
+'''
+
 from sklearn.feature_extraction.text import CountVectorizer
 
 # Create the basic token pattern

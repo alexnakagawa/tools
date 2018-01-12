@@ -1,3 +1,10 @@
+'''
+This is an example architecture for a training of a model pipeline using classroom data from Datacamp.
+
+Inspired from the "Supervised Learning" course on Datacamp.com
+Author: Alex Nakagawa
+'''
+
 # Import pipeline
 from sklearn.pipeline import Pipeline
 
@@ -8,7 +15,9 @@ from sklearn.multiclass import OneVsRestClassifier
 # Import CountVectorizer
 from sklearn.feature_extraction.text import CountVectorizer
 
-# Import other preprocessing modules
+# Import other preprocessing modul
+
+es
 from sklearn.preprocessing import Imputer
 from sklearn.feature_selection import chi2, SelectKBest
 

@@ -5,7 +5,6 @@ Inspired from the "Supervised Learning with scikit-learn" course on Datacamp.com
 Author: Alex Nakagawa
 '''
 
-
 # Setup the pipeline
 steps = [('scaler', StandardScaler()),
          ('*ANY_REGRESSOR*', '*REGRESSOR_OBJECT*')]

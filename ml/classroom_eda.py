@@ -1,3 +1,10 @@
+'''
+This is an example architecture for a standard EDA (exploratory data analysis).
+
+Inspired from the "Supervised Learning" course on Datacamp.com
+Author: Alex Nakagawa
+'''
+
 import matplotlib.pyplot as plt
 
 # Define the lambda function: categorize_label
