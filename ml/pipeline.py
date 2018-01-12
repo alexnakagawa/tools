@@ -8,7 +8,7 @@ Author: Alex Nakagawa
 
 # Setup the pipeline
 steps = [('scaler', StandardScaler()),
-         ('*ANY_REGRESSOR*', *REGRESSOR_OBJECT*]
+         ('*ANY_REGRESSOR*', '*REGRESSOR_OBJECT*')]
 
 pipeline = Pipeline(steps)
 
