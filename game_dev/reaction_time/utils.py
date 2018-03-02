@@ -16,4 +16,5 @@ def download_csv(subject):
                                                                  vars[i].shape, vars[i].color, vars[i].music,
                                                                  temp.delay_time, temp.reaction_time, temp.x_pos,
                                                                  temp.y_pos, i, j)
+        csv.write(row)
 
