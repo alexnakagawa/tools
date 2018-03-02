@@ -43,14 +43,13 @@ class Subject:
         Append a new variation, raise error if too many variations
         return: None
         """
-        if self.variation_count < 1 or self.variation_count > 3:
-            self.variation_count = 1
+        if self.variation_count > 3:
             raise ValueError('Oh no, you cannot have more than 3.')
         # Change attributes later
         temp = Variation(self.variation_count)
         self.variations[self.variation_count] = temp
         self.variation_count += 1
-        return 
+        return
 
 
 class Variation:
@@ -78,14 +77,14 @@ class Variation:
                 Attributes of variation: %s\n \
                 Completed Trials: %d' % (self.step, self.attributes, len(self.trials))
 
-    def new_trial(self):
-        if self.trial_count < 0 or self.trial_count > 5:
-            self.trial_count = 1
-            raise ValueError('Oh no, the trial did not reset correctly. Resetting to 1...')
-        self.trials[self.trial_count] = Trial(self.trial_count)
+    def get_attributes(self):
+        return self.attributes
 
-    def new_object(self):
-        self.Object = Object(self.attributes)
+    def new_trial(self):
+        if self.trial_count > 5:
+            raise ValueError('Oh no, something went wrong...')
+        self.trials[self.trial_count] = Trial(self.trial_count)
+        self.trial_count += 1
 
 
 class Trial:
@@ -98,6 +97,9 @@ class Trial:
         self.step = step
         self.trial_count = 1  # max 5
         self.delay_time = 1000.0  # in ms
+        self.reaction_time = 0.0  # in ms
+        self.x_pos = 0
+        self.y_pos = 0
 
     def __repr__(self):
         return 'Trial() object'
@@ -107,30 +109,19 @@ class Trial:
 
     def set_delay_time(self, delay_time):
         """
-        Delay time is some time between 1000 ms (1.0 sec) to 7000 ms ()
+        Delay time is some time between 1000 ms (1.0 sec) to 5000 ms (5.0 sec)
         """
         self.delay_time = delay_time
-        return delay_time
+        return
 
+    def set_reaction_time(self, reaction_time):
+        self.reaction_time = reaction_time
+        return
 
-class Object:
-    """
-    location:
-    color:
-    shape:
-    music:
-    """
+    def set_x_pos(self, x_pos):
+        self.x_pos = x_pos
+        return
 
-    # TODO
-    def __init__(self, attributes):
-        if len(attributes) != 3:
-            raise ValueError('Attributes list should be 3 ints')
-        self.color = attributes[0]
-        self.shape = attributes[1]
-        self.music = attributes[2]
-
-    def __repr__(self):
-        return 'Object() object'
-
-    def __str__(self):
-        return 'Color: %s\nShape: %s\nMusic: %s\n' % (self.color, self.shape, self.music)
+    def set_y_pos(self, y_pos):
+        self.y_pos = y_pos
+        return

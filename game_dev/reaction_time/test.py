@@ -21,9 +21,11 @@ def test_variations():
     print('Second variation:', alex.variations[2])
     print('Third variation:', alex.variations[3])
 
-# def test_trials():
 
-# def test_objects():
+def test_trials():
+    vars = alex.variations
+    for i in range(5):
+        vars[i].new_trial()
 
 if __name__ == '__main__':
     print('This is a test...\n')

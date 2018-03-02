@@ -4,6 +4,7 @@ try:
     import random
     import math
     import os
+    import time
     from pygame.locals import *
     from objects import *
     import constants as c
@@ -61,11 +62,10 @@ def main(argv):
             _cached_text[key] = image
         return image
 
+
     # Game Initialized -----------------
     pygame.init()
-    fps = 30  # frames per second setting
-    fps_clock = pygame.time.Clock()
-    fps_clock.tick(fps)
+    pygame.mouse.set_visible(False)
     # ----------------------------------
 
     # Base
@@ -92,13 +92,13 @@ def main(argv):
     title_pos = title.get_rect()
     title_pos.centerx = background.get_rect().centerx
     background.blit(title, title_pos)
-
     # Blit background to the screen
     screen.blit(background, (0, 0))
     pygame.display.update()
     # ----------------------------------
 
     # Surface 2: Instructions ----------
+    pygame.time.wait(100)
     lines = ["INSTRUCTIONS:",
              "You will be the test subject in three variations of the same experiment.",
              "A countdown will begin at the start of each round.",
@@ -111,6 +111,8 @@ def main(argv):
         instructions_pos.centery = background.get_rect().centery - (270 - 48*i)
         background.blit(instructions, instructions_pos)
 
+    pygame.time.wait(100)
+
     sb = create_text("Press the [spacebar] to continue", c.PREF_FONTS, 16, c.RED)
     sb_pos = sb.get_rect()
     sb_pos.topleft = c.SPACEBAR_LOC
@@ -120,7 +122,7 @@ def main(argv):
     wait()
     # ----------------------------------
 
-    # Surface 3: Countdown -------------
+    # Surface 3: Ready Screen -------------
     countdown_background = pygame.Surface(screen.get_size())
     countdown_background = countdown_background.convert()
     countdown_background.fill(c.WHITE)
@@ -128,32 +130,114 @@ def main(argv):
     get_ready = create_text("Get Ready...", c.PREF_FONTS, 24, c.BLACK)
     get_ready_pos = get_ready.get_rect()
     get_ready_pos.centerx = countdown_background.get_rect().centerx
-    get_ready_pos.centery = countdown_background.get_rect().centery
+    get_ready_pos.centery = countdown_background.get_rect().centery - 100
     countdown_background.blit(get_ready, get_ready_pos)
+    screen.blit(countdown_background, countdown_background.get_rect())
+    pygame.display.update()
+    pygame.time.wait(1000)
 
-    sb = create_text("Press the [spacebar] to continue", c.PREF_FONTS, 16, c.RED)
+    sb = create_text("Press the [spacebar] when you are ready", c.PREF_FONTS, 16, c.RED)
     sb_pos = sb.get_rect()
     sb_pos.topleft = c.SPACEBAR_LOC
     countdown_background.blit(sb, sb_pos)
-    screen.blit(background, countdown_background.get_rect())
+    screen.blit(countdown_background, screen.get_rect())
     pygame.display.update()
     wait()
 
-    # ----------------------------------
+    start = create_text("START", c.PREF_FONTS, 50, c.GREEN)
+    start_pos = start.get_rect()
+    start_pos.centerx = countdown_background.get_rect().centerx
+    start_pos.centery = countdown_background.get_rect().centery + 100
+    countdown_background.blit(start, start_pos)
+    screen.blit(countdown_background, countdown_background.get_rect())
+    pygame.display.update()
 
-    # INSERT COUNTDOWN HERE
-
-    screen.blit(countdown_background, (0, 0))
-
+    pygame.time.wait(500)
     # Surface 4,5,6: Variation #1,2,3 ----------
-    for i in range(3):
-        player.new_variation()
-        print(player.display_variations())
+    clean_background = pygame.Surface(screen.get_size())
+    clean_background = clean_background.convert()
+    clean_background.fill(c.WHITE)
 
-    # TODO: Implement music
-    # pygame.mixer.music.load('foo.mp3')
-    # pygame.mixer.music.play(0)
+    for i in range(1, 4):
+        var_text = create_text('Variation %d' % i, c.PREF_FONTS, 32, c.BLACK)
+        var_text_pos = var_text.get_rect()
+        var_text_pos.centerx = clean_background.get_rect().centerx
+        clean_background.blit(var_text, var_text_pos)
+        screen.blit(clean_background, clean_background.get_rect())
+        sb = create_text("Press the [spacebar] when you are ready", c.PREF_FONTS, 16, c.RED)
+        sb_pos = sb.get_rect()
+        sb_pos.topleft = c.SPACEBAR_LOC
+        clean_background.blit(sb, sb_pos)
+        screen.blit(clean_background, screen.get_rect())
+        pygame.display.update()
+
+        wait()
+
+        clean_background.fill(c.WHITE)
+        screen.blit(clean_background, screen.get_rect())
+        pygame.display.update()
+        player.new_variation()
+        current_var = player.variations[i]
+        current_var_attributes = current_var.get_attributes()
+        # TODO: MUSIC
+        # pygame.mixer.music.load(current_var_attributes[2])
+        # pygame.mixer.music.play()
+        clock = pygame.time.Clock()
+        for j in range(1, 6):
+            current_var.new_trial()
+            current_trial = current_var.trials[j]
+            delay_time = random.randrange(1000, 5000)
+            x_pos, y_pos = random.randrange(35, clean_background.get_width() - 35),\
+                           random.randrange(35, clean_background.get_height() - 35)
+
+            current_trial.set_delay_time(delay_time)
+            current_trial.set_x_pos(x_pos)
+            current_trial.set_y_pos(y_pos)
+            # Trials --------------------------
+            pygame.time.wait(delay_time)
+            clock.tick()
+            if current_var_attributes[0] == 1:
+                pygame.draw.circle(clean_background, c.COLOR_DICT[current_var_attributes[1]], (x_pos, y_pos), 20)
+            elif current_var_attributes[0] == 2:
+                pygame.draw.rect(clean_background, c.COLOR_DICT[current_var_attributes[1]], Rect(x_pos, y_pos, 35, 35))
+            else:
+                raise ValueError('Something is wrong...')
+            screen.blit(clean_background, screen.get_rect())
+            pygame.display.update()
+            wait()
+            clock.tick()
+            current_trial.set_reaction_time(clock.get_time())
+            clean_background.fill(c.WHITE)
+            screen.blit(clean_background, screen.get_rect())
+            pygame.display.update()
+        # pygame.mixer.music.stop()
+            # ---------------------------------
     # ----------------------------------
+
+    end_screen = pygame.Surface(screen.get_size())
+    end_screen = end_screen.convert()
+    end_screen.fill(c.WHITE)
+
+    concludes = create_text('This concludes the test.', c.PREF_FONTS, 24, c.BLACK)
+    concludes_pos = concludes.get_rect()
+    concludes_pos.centerx = end_screen.get_rect().centerx
+    concludes_pos.centery = end_screen.get_rect().centery - 80
+    end_screen.blit(concludes, concludes_pos)
+
+    f_query = create_text("To save the data, please press 'f'.", c.PREF_FONTS, 24, c.BLACK)
+    f_query_pos = f_query.get_rect()
+    f_query_pos.centerx = end_screen.get_rect().centerx
+    f_query_pos.centery = end_screen.get_rect().centery
+    end_screen.blit(f_query, f_query_pos)
+
+    esc_query = create_text("To delete the data, please press 'esc'.", c.PREF_FONTS, 24, c.BLACK)
+    esc_query_pos = esc_query.get_rect()
+    esc_query_pos.centerx = end_screen.get_rect().centerx
+    esc_query_pos.centery = end_screen.get_rect().centery + 80
+    end_screen.blit(esc_query, esc_query_pos)
+
+    screen.blit(end_screen, screen.get_rect())
+    pygame.display.update()
 
     # Final Event loop -----------------------
     while True:
@@ -168,6 +252,7 @@ def main(argv):
                     if event.key == K_f:
                         print('[f] was pressed.\nSaving (not yet) data...')
                         # SAVE DATA HERE
+                        
                         pygame.quit()
                         print('Exiting program...')
                         sys.exit()
