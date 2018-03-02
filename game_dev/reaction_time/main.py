@@ -7,6 +7,7 @@ try:
     import time
     from pygame.locals import *
     from objects import *
+    from utils import download_csv
     import constants as c
 except ImportError as err:
     print("couldn't load module: %s" % err)
@@ -251,8 +252,7 @@ def main(argv):
                         sys.exit()
                     if event.key == K_f:
                         print('[f] was pressed.\nSaving (not yet) data...')
-                        # SAVE DATA HERE
-                        
+                        download_csv(player)
                         pygame.quit()
                         print('Exiting program...')
                         sys.exit()
