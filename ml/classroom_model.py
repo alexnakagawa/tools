@@ -15,9 +15,7 @@ from sklearn.multiclass import OneVsRestClassifier
 # Import CountVectorizer
 from sklearn.feature_extraction.text import CountVectorizer
 
-# Import other preprocessing modul
-
-es
+# Import other preprocessing modules
 from sklearn.preprocessing import Imputer
 from sklearn.feature_selection import chi2, SelectKBest
 
