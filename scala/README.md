@@ -1,5 +1,7 @@
 # Scala Syntax
 
+__Author:__ Alex Nakagawa
+
 This is an example program written in Scala as an exercise for syntax. Below are a few notes taken while learning the language.
 
 ## 0. Introduction
@@ -111,8 +113,70 @@ def function_name(function params): return type = {
 
 // Example:
 def areaRect(len: Float, wid: Float) Float = {
-    len * wid // Last expression automatically becomes return value
+    len * wid // Last expression automatically becomes return value, no need for return keyword
 }
+```
 
+## 4. Collections
 
+There are four types of Collections most widely used in Scala:
 
+### 4.1. Array
+
+Arrays are collections of items all with the same type, and a FIXED length
+
+```scala
+val arr = new Array[Int](10) // declaring an int array full of 10 zeros
+arr(0) = 1 // assigns int 1 to zero index
+```
+
+### 4.2. ArrayBuffer
+
+ArrayBuffer objects can grow in size, you do not need to specify a size on declaration.
+
+```scala
+import scala.collection.mutable.ArrayBuffer
+val arr = new ArrayBuffer[Int]()
+arr += 10
+arr += (20, 30)
+arr ++= Array(40, 50, 60)
+arr -= 60
+arr // ArrayBuffer(10, 20, 30, 40, 50) ////// 60 was deleted.
+```
+
+Some common operations with Arrays and ArrayBuffers:
+
+```scala
+a.trimEnd(2) // trims last two elements
+a.insert(2, x) // adds x at second index
+a.insert(2, 10, 11, 12) // adds list (10,11,12) at second index
+a.remove(2) // removes item at second index
+
+// For traversal:
+for (el <- a)
+
+// Others:
+Array(1, 2, 3, 4).sum // returns 10
+Array(1, 5, 9, 8).max // returns 9
+Array(1, 7, 2, 9)
+```
+
+### 4.3. Map
+
+A collection of key-value pairs. The key and the value don't necessarily have to be the same type.
+
+```scala
+import scala.collection.immutable.Map
+import scala.collection.mutable.Map
+val mapping = Map('Alex' -> 'K', 'Nakagawa' -> 'V')
+```
+
+### 4.4. Tuple
+
+More generalized list.
+
+```scala
+val a = (100, 'John', 'France') // once values are initialized, they cannot be changed
+a._2 // returns 'John', tuples indexing starts from 1
+
+```
