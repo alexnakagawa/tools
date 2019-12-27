@@ -4,6 +4,8 @@ This is an example of the instantiation of a Pipeline with any standardized regr
 Inspired from the "Supervised Learning with scikit-learn" course on Datacamp.com
 Author: Alex Nakagawa
 '''
+from sklearn.preprocessing import StandardScaler
+from sklearn.pipeline import Pipeline
 
 # Setup the pipeline
 steps = [('scaler', StandardScaler()),
@@ -16,7 +18,7 @@ parameters = {'*REGRESSOR*__C':[1, 10, 100],
               '*REGRESSOR*__gamma':[0.1, 0.01]}
 
 # Create train and test sets
-X_train, X_test, y_train, y_test = train_test_split(X,y,test_size=0.2,random_state=21)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2,random_state=21)
 
 # Instantiate the GridSearchCV object: cv
 cv = GridSearchCV(pipeline, parameters, cv=3)
