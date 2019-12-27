@@ -1,3 +1,5 @@
+** This repository is still under construction. **
+
 # Scala Syntax
 
 __Author:__ Alex Nakagawa
@@ -180,3 +182,4 @@ val a = (100, 'John', 'France') // once values are initialized, they cannot be c
 a._2 // returns 'John', tuples indexing starts from 1
 
 ```
+
